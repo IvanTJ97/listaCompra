@@ -46,23 +46,23 @@ const ListMaster = ({ navigation }) => {
         <Text className="text-xl" style={{ color }}>+</Text>
       </TouchableOpacity>
     </View>
-    <View className="flex-row">
-      <TouchableOpacity onPress={addItem} className=" bg-black py-5 px-4 w-full">
-        <Text className="text-white text-xl text-center">+</Text>
-      </TouchableOpacity>
+    <TouchableOpacity onPress={addItem} className=" bg-black py-5 px-4 w-full">
+      <Text className="text-white text-xl text-center">+</Text>
+    </TouchableOpacity>
+    <View className='flex-1 h-1/2'>
+      <FlatList
+        data={items}
+        renderItem={({ item }) => <ItemView
+          id={item.id}
+          value={item.value}
+          color={item.color}
+          remove={() => removeItem(item.id)}
+          nav={() => navigation.navigate('Child', { color: item.color, value: item.value })}
+        />}
+        keyExtractor={item => item.id}
+      />
     </View>
-    <FlatList
-      data={items}
-      renderItem={({ item }) => <ItemView
-        id={item.id}
-        value={item.value}
-        color={item.color}
-        remove={() => removeItem(item.id)}
-        nav={() => navigation.navigate('Child', { color: item.color, value: item.value })}
-      />}
-      keyExtractor={item => item.id}
-    />
     <ColorPicker funClose={() => setModal(false)} modal={modal} funColor={color => setColor(color)} />
-  </View>;
+  </View>
 };
 export default ListMaster;

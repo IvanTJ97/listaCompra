@@ -44,7 +44,7 @@ const ListChild = ({ navigation, route }) => {
     deleteAllItems(value);
     setToggle(!toggle);
   };
-  return <View className="flex-1">
+  return <View className="flex-1 bg-white">
     <StatusBar />
     <TouchableOpacity className="pt-5 flex-row" onPress={() => navigation.goBack()}>
       <Ionicons name="chevron-back" size={31} color={color} />
@@ -61,7 +61,7 @@ const ListChild = ({ navigation, route }) => {
         <Text className="text-white text-xl">+</Text>
       </TouchableOpacity>
     </View>
-    <View className="flex-row justify-around mb-[16px]">
+    <View className="flex-row justify-around mb-[10px]">
       <TouchableOpacity className="bg-slate-900 py-2 px-3" onPress={() => setEdit(!edit)}>
         <Text className="text-white text-lg">
           Editar
@@ -78,31 +78,37 @@ const ListChild = ({ navigation, route }) => {
         </Text>
       </TouchableOpacity>
     </View>
-    <View>
-      <Text className='text-2xl ml-4 mb-2 mt-3'>To do</Text>
-      <FlatList
-        data={items.filter(el => el.done === 0)}
-        renderItem={({ item }) => <ElementView
-          done={false}
-          value={item.value}
-          edit={edit}
-          func={() => setItemD(item.id, 1)}
-          remove={() => removeItem(item.id)}
-        />}
-        keyExtractor={item => item.id}
-      />
-      <Text className='text-2xl ml-4 mb-2 mt-3'>Done</Text>
-      <FlatList
-        data={items.filter(el => el.done === 1)}
-        renderItem={({ item }) => <ElementView
-          done={true}
-          value={item.value}
-          edit={edit}
-          func={() => setItemD(item.id, 0)}
-          remove={() => removeItem(item.id)}
-        />}
-        keyExtractor={item => item.id}
-      />
+    <View className='flex-1'>
+      <View className='h-1/2'>
+        <Text className='text-2xl ml-4 mb-2 mt-3'>To do</Text>
+        <FlatList
+          data={items.filter(el => el.done === 0)}
+          renderItem={({ item }) => <ElementView
+            done={false}
+            value={item.value}
+            edit={edit}
+            func={() => setItemD(item.id, 1)}
+            remove={() => removeItem(item.id)}
+          />}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={() => <Text className='text-center text-2xl'>No more items</Text>}
+        />
+      </View>
+      <View className='h-1/2'>
+        <Text className='text-2xl ml-4 mb-2 mt-3'>Done</Text>
+        <FlatList
+          data={items.filter(el => el.done === 1)}
+          renderItem={({ item }) => <ElementView
+            done={true}
+            value={item.value}
+            edit={edit}
+            func={() => setItemD(item.id, 0)}
+            remove={() => removeItem(item.id)}
+          />}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={() => <Text className='text-center text-2xl'>No item picked</Text>}
+        />
+      </View>
     </View>
   </View>;
 };

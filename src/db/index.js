@@ -1,4 +1,5 @@
 import * as SQLite from 'expo-sqlite';
+import toastModal from '../components/ToastModal.jsx';
 const db = SQLite.openDatabase("prueba.db");
 export const addMainItem = (color, text) => {
     if (text === null || text === "" || text.includes(" ") || text === 'lista_compra') {
@@ -10,7 +11,7 @@ export const addMainItem = (color, text) => {
             tx.executeSql("INSERT INTO lista_compra (color,value) VALUES (?,?)", [color, text]);
         },
         null,
-        () => alert("Added succesfully"),
+        () => toastModal("Added succesfully"),
         error => alert(error)
     );
 };
@@ -20,7 +21,7 @@ export const deleteItem = (table, id) => {
             tx.executeSql(`DELETE FROM ${table} where id = ?;`, [id])
         },
         null,
-        () => alert("Deleted succesfully"),
+        () => toastModal("Deleted succesfully"),
         error => alert(error)
     );
 };
@@ -34,7 +35,7 @@ export const addItem = (table, text) => {
             tx.executeSql(`INSERT INTO ${table} (done, value) values (?, ?)`, [0, text]);
         },
         null,
-        () => alert("Added succesfully"),
+        () => toastModal("Added succesfully"),
         error => console.error(error)
     );
 };
@@ -58,7 +59,7 @@ export const deleteAllItems = (table) => {
             tx.executeSql(`DELETE FROM ${table};`, [])
         },
         null,
-        () => alert("Deleted succesfully"),
+        () => toastModal("Deleted succesfully"),
         error => alert(error)
     );
 };
